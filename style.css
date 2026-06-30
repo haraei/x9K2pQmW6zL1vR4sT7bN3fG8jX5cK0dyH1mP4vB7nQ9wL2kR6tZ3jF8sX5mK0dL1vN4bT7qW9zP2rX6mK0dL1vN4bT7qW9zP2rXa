@@ -1,0 +1,68 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+#reset {
+    display: block;
+    margin: 0 auto;
+}
+
+#dealer-cards img {
+    height: 175px;
+    width: 125px;
+    margin: 1px;
+}
+
+#your-cards img {
+    height: 175px;
+    width: 125px;
+    margin: 1px;
+}
+
+#maker {
+    width: 75px;
+    height: 60px;
+    font-size: 15px;
+}
+
+#hit {
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+}
+
+#stay {
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+}
+#restart {
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+}
+
+P {
+    font-size: 20px;
+}
+
+body {
+    /* 画像の上に半透明の黒い幕を重ねて、ゲームの文字やカードを見やすくする */
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
+        url('back/2.png');
+
+    /* 画像が画面にピッタリ収まるように調整する設定 */
+    background-size: cover;       /* 画面全体を覆うように拡大縮小 */
+    background-position: center;   /* 画像の中心を画面の中心に合わせる */
+    background-repeat: no-repeat;  /* 画像を繰り返さない */
+    background-attachment: fixed;  /* スクロールしても背景を固定する */
+
+    /* 文字色を白っぽくして、暗い背景でも読めるようにする */
+    color: #f0f0f0; 
+    
+    /* 画面全体の余白をゼロにする */
+    margin: 0;
+    padding: 0;
+}

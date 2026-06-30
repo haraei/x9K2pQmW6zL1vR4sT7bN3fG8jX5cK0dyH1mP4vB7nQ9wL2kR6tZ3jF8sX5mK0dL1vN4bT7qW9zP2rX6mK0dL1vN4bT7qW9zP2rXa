@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="robots" content="noindex">
+        <title>橘祭</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="blackjack.js"></script>
+    </head>
+    <body>
+        <p>games:<span id="count"></span> win:<span id="wincount"></span> tie:<span id="tiecount"></span> lose:<span id="losecount"></span></p>
+        <h2>Dealer: <span id="dealer-sum"></span></h2>
+        <div id="dealer-cards">
+        </div>
+        
+        <h2>You: <span id="your-sum"></span></h2>
+        <div id="your-cards"></div>
+
+        <br>
+        <button id="hit">Hit</button>
+        <button id="stay">Stay</button>
+        <button id="restart">Restart</button>
+        <p id="results"></p>
+
+        <br>
+        <p id="BGMname"></p>
+        <button id="maker">管理者</button>
+
+        <div id="musicArea" style="display: none;">
+            <p>BGMを選択しろ</p>
+            <select id="musicSelect" onchange="changemusic(event)">
+                <option value="stop">ミュート（消音）</option>
+                <option value="bgm1">BGM1</option>
+                <option value="bgm2">BGM2</option>
+                <option value="hurou">不老不死</option>
+                <option value="hoshikuzu">星屑サラウンド</option>
+                <option value="typhoon">タイフーンパレード</option>
+                <option value="success">Success!</option>
+                <option value="revolution">1%の革命前夜</option>
+            </select>
+        </div>
+
+        <br>
+        <div id="countArea" style="display: none;">
+            <select id="counttype" onchange="changecounttype(event)">
+                <option value="">選択</option>
+                <option value="win">win</option>
+                <option value="tie">tie</option>
+                <option value="lose">lose</optopn>
+            </select>
+            <input id="countchange" type="text">
+            <button id="decisioncount">確定</button>
+        </div>
+
+        <br>
+        <button id="reset" style="display: none;">reset</button>
+    </body>
+</html>
