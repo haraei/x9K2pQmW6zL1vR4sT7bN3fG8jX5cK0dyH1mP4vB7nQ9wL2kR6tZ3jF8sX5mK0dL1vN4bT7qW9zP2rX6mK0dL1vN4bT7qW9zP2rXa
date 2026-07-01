@@ -177,8 +177,15 @@ function hit() {
     yourSum += getValue(card);
     yourAceCount += checkAce(card);
     document.getElementById("your-cards").append(cardImg);
-    dealerSum = reduceAce(dealerSum, dealerAceCount);
-    yourSum = reduceAce(yourSum, yourAceCount);
+    // ディーラーの計算と変数更新
+    let dealerResult = reduceAce(dealerSum, dealerAceCount);
+    dealerSum = dealerResult.sum;
+    dealerAceCount = dealerResult.aceCount;
+
+    // あなたの計算と変数更新
+    let yourResult = reduceAce(yourSum, yourAceCount);
+    yourSum = yourResult.sum;
+    yourAceCount = yourResult.aceCount;
     document.getElementById("your-sum").innerText = yourSum;
 
     if (reduceAce(yourSum, yourAceCount) > 21) { //A, J, 8 -> 1 + 10 + 8
@@ -193,7 +200,10 @@ function stay() {
     if (finish) {
         return;
     }
-    dealerSum = reduceAce(dealerSum, dealerAceCount);
+    // ディーラーの計算と変数更新
+    let dealerResult = reduceAce(dealerSum, dealerAceCount);
+    dealerSum = dealerResult.sum;
+    dealerAceCount = dealerResult.aceCount;
 
     canHit = false;
     document.getElementById("hidden").src = "./cards/" + hidden + ".png";
@@ -261,7 +271,7 @@ function reduceAce(playerSum, playerAceCount) {
         playerSum -= 10;
         playerAceCount -= 1;
     }
-    return playerSum;
+    return { sum: playerSum, aceCount: playerAceCount };
 }
 
 function resetGame() {
