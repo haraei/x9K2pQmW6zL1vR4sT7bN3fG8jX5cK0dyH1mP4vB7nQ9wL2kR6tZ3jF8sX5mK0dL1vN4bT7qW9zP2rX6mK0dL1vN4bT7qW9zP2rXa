@@ -41,7 +41,7 @@ const タイフーンパレード = new Audio("music/タイフーンパレード
 const Success = new Audio("music/Success!.mp3");
 Success.loop = true;
 
-const 一パーセントの革命前夜 = new Audio("music/1%の革命前夜.mp3");
+const 一パーセントの革命前夜 = new Audio("music/1パーセントの革命前夜.mp3");
 一パーセントの革命前夜.loop = true;
 
 // const シャイニングスター = new Audio("https://maou.audio/14_shining_star/");
