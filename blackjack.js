@@ -192,7 +192,6 @@ function hit() {
     let cardImg = document.createElement("img");
     let card = deck.pop();
     yourCardsList.push(card); // 手札リストにカードを追加
-    yourCardsList.push(card); 
     cardImg.src = "./cards/" + card + ".png";
     document.getElementById("your-cards").append(cardImg);
 
