@@ -172,25 +172,27 @@ function hit() {
 
     let cardImg = document.createElement("img");
     let card = deck.pop();
-    yourCardsList.push(card);
+    yourCardsList.push(card); // 手札リストにカードを追加
     cardImg.src = "./cards/" + card + ".png";
-    yourSum += getValue(card);
-    yourAceCount += checkAce(card);
     document.getElementById("your-cards").append(cardImg);
-    // ディーラーの計算と変数更新
-    let dealerResult = reduceAce(dealerSum, dealerAceCount);
-    dealerSum = dealerResult.sum;
-    dealerAceCount = dealerResult.aceCount;
 
-    // あなたの計算と変数更新
+    yourSum = 0;
+    yourAceCount = 0;
+    for (let i = 0; i < yourCardsList.push.length; i++) {
+        yourSum += getValue(yourCardsList[i]);
+        yourAceCount += checkAce(yourCardsList[i]);
+    }
+
+    // 計算した後にエースの調整を行う
     let yourResult = reduceAce(yourSum, yourAceCount);
     yourSum = yourResult.sum;
     yourAceCount = yourResult.aceCount;
+
     document.getElementById("your-sum").innerText = yourSum;
 
-    if (reduceAce(yourSum, yourAceCount) > 21) { //A, J, 8 -> 1 + 10 + 8
+    if (yourSum > 21) { 
         canHit = false;
-        stay()
+        stay();
     }
 
     saveGameState();
