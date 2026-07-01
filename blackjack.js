@@ -178,15 +178,12 @@ function hit() {
 
     yourSum = 0;
     yourAceCount = 0;
-    for (let i = 0; i < yourCardsList.push.length; i++) {
+    for (let i = 0; i < yourCardsList.length; i++) {
         yourSum += getValue(yourCardsList[i]);
         yourAceCount += checkAce(yourCardsList[i]);
     }
 
-    // 計算した後にエースの調整を行う
-    let yourResult = reduceAce(yourSum, yourAceCount);
-    yourSum = yourResult.sum;
-    yourAceCount = yourResult.aceCount;
+    yourSum = reduceAce(yourSum, yourAceCount);
 
     document.getElementById("your-sum").innerText = yourSum;
 
@@ -202,10 +199,7 @@ function stay() {
     if (finish) {
         return;
     }
-    // ディーラーの計算と変数更新
-    let dealerResult = reduceAce(dealerSum, dealerAceCount);
-    dealerSum = dealerResult.sum;
-    dealerAceCount = dealerResult.aceCount;
+    dealerSum = reduceAce(dealerSum, dealerAceCount);
 
     canHit = false;
     document.getElementById("hidden").src = "./cards/" + hidden + ".png";
@@ -273,7 +267,7 @@ function reduceAce(playerSum, playerAceCount) {
         playerSum -= 10;
         playerAceCount -= 1;
     }
-    return { sum: playerSum, aceCount: playerAceCount };
+    return playerSum;
 }
 
 function resetGame() {
