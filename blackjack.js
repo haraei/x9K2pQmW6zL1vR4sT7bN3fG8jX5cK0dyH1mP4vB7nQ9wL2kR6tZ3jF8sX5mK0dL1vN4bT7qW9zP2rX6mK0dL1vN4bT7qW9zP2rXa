@@ -194,7 +194,6 @@ function stay() {
         return;
     }
     dealerSum = reduceAce(dealerSum, dealerAceCount);
-    yourSum = reduceAce(yourSum, yourAceCount);
 
     canHit = false;
     document.getElementById("hidden").src = "./cards/" + hidden + ".png";
