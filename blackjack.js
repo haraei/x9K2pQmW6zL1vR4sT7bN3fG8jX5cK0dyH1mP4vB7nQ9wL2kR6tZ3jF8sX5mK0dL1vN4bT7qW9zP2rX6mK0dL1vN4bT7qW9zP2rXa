@@ -165,6 +165,7 @@ function hit() {
     yourSum += getValue(card);
     yourAceCount += checkAce(card);
     document.getElementById("your-cards").append(cardImg);
+    document.getElementById("your-sum").innerText = yourSum;
 
     if (reduceAce(yourSum, yourAceCount) > 21) { //A, J, 8 -> 1 + 10 + 8
         canHit = false;
