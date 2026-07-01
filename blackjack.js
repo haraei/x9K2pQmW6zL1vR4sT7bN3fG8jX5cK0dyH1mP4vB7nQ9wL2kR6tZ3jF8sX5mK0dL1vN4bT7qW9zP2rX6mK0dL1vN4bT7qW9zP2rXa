@@ -127,6 +127,7 @@ function startGame() {
     dealerCardsList = [];
     yourCardsList = [];
 
+    // ディーラーの1枚目（伏せ札）
     hidden = deck.pop();
     dealerCardsList.push(hidden);
 
@@ -136,109 +137,40 @@ function startGame() {
     document.getElementById("dealer-cards").append(hiddenImg);
     dealerSum += getValue(hidden);
     dealerAceCount += checkAce(hidden);
+
+    // ディーラーが17点以上になるまで引く（※yourCardsList.pushを削除しました）
     while (dealerSum < 17) {
         let cardImg = document.createElement("img");
         let card = deck.pop();
-        yourCardsList.push(card);
         dealerCardsList.push(card);
         cardImg.src = "./cards/" + card + ".png";
         dealerSum += getValue(card);
         dealerAceCount += checkAce(card);
         document.getElementById("dealer-cards").append(cardImg);
     }
-    console.log(dealerSum);
+    console.log("Dealer Initial Sum: " + dealerSum);
 
-    
-
+    // プレイヤーに最初の2枚を配る（※ここできちんと yourCardsList に追加します）
     for (let i = 0; i < 2; i++) {
         let cardImg = document.createElement("img");
         let card = deck.pop();
+        yourCardsList.push(card); // ★超重要！これで手札リストに保存されます
         cardImg.src = "./cards/" + card + ".png";
-        yourSum += getValue(card);
-        yourAceCount += checkAce(card);
         document.getElementById("your-cards").append(cardImg);
     }
 
-    console.log(yourSum);
-
-    saveGameState();
-    document.getElementById("your-sum").innerText = yourSum;
-}
-
-function hit() {
-    if (!canHit) {
-        return;
-    }
-
-    let cardImg = document.createElement("img");
-    let card = deck.pop();
-    yourCardsList.push(card); 
-    cardImg.src = "./cards/" + card + ".png";
-    document.getElementById("your-cards").append(cardImg);
-
+    // 最初に配られた2枚の時点で、エースの調整を含めて正しく計算する
     yourSum = 0;
     yourAceCount = 0;
     for (let i = 0; i < yourCardsList.length; i++) {
         yourSum += getValue(yourCardsList[i]);
         yourAceCount += checkAce(yourCardsList[i]);
     }
-
     yourSum = reduceAce(yourSum, yourAceCount);
 
+    console.log("Your Initial Sum: " + yourSum);
+
     document.getElementById("your-sum").innerText = yourSum;
-
-    if (yourSum > 21) { 
-        canHit = false;
-        stay();
-    }
-
-    saveGameState();
-}
-
-function stay() {
-    if (finish) {
-        return;
-    }
-    dealerSum = reduceAce(dealerSum, dealerAceCount);
-
-    canHit = false;
-    document.getElementById("hidden").src = "./cards/" + hidden + ".png";
-    finish = true;
-
-    let message = "";
-    if (yourSum > 21) {
-        message = "You Lose!(burst)";
-        losecount++;
-    }
-    else if (dealerSum > 21) {
-        message = "You win!(burst)";
-        wincount++;
-    }
-    //both you and dealer <= 21
-    
-    else if (yourSum == dealerSum) {
-        message = "Tie!";
-        tiecount++;
-    }
-
-    else if (yourSum > dealerSum) {
-        message = "You Win!";
-        wincount++;
-    }
-    else if (yourSum < dealerSum) {
-        message = "You Lose!";
-        losecount++;
-    }
-    count++;
-
-    document.getElementById("count").innerText = count;
-    document.getElementById("wincount").innerText = wincount;
-    document.getElementById("tiecount").innerText = tiecount;
-    document.getElementById("losecount").innerText = losecount;
-    document.getElementById("dealer-sum").innerText = dealerSum;
-    document.getElementById("your-sum").innerText = yourSum;
-    document.getElementById("results").innerText = message;
-
     saveGameState();
 }
 
