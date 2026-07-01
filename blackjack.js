@@ -162,6 +162,7 @@ function startGame() {
     console.log(yourSum);
 
     saveGameState();
+    document.getElementById("your-sum").innerText = yourSum;
 }
 
 function hit() {
@@ -176,6 +177,8 @@ function hit() {
     yourSum += getValue(card);
     yourAceCount += checkAce(card);
     document.getElementById("your-cards").append(cardImg);
+    dealerSum = reduceAce(dealerSum, dealerAceCount);
+    yourSum = reduceAce(yourSum, yourAceCount);
     document.getElementById("your-sum").innerText = yourSum;
 
     if (reduceAce(yourSum, yourAceCount) > 21) { //A, J, 8 -> 1 + 10 + 8
