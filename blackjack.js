@@ -1,5 +1,8 @@
 "use strict";
 
+let dealerCardsList = [];
+let yourCardsList = [];
+
 let dealerSum = 0;
 let yourSum = 0;
 
@@ -67,7 +70,9 @@ window.onload = function() {
             count,
             wincount,
             tiecount,
-            losecount
+            losecount,
+            dealerCardsList,
+            yourCardsList
         } = saved);
 
         renderRestoredGame();
@@ -119,8 +124,11 @@ function shuffleDeck() {
 }
 
 function startGame() {
-    
+    dealerCardsList = [];
+    yourCardsList = [];
+
     hidden = deck.pop();
+    dealerCardsList.push(hidden);
 
     let hiddenImg = document.createElement("img");
     hiddenImg.src = "./cards/card_back.png";
@@ -131,6 +139,8 @@ function startGame() {
     while (dealerSum < 17) {
         let cardImg = document.createElement("img");
         let card = deck.pop();
+        yourCardsList.push(card);
+        dealerCardsList.push(card);
         cardImg.src = "./cards/" + card + ".png";
         dealerSum += getValue(card);
         dealerAceCount += checkAce(card);
@@ -161,6 +171,7 @@ function hit() {
 
     let cardImg = document.createElement("img");
     let card = deck.pop();
+    yourCardsList.push(card);
     cardImg.src = "./cards/" + card + ".png";
     yourSum += getValue(card);
     yourAceCount += checkAce(card);
@@ -399,7 +410,9 @@ function saveGameState() {
         count,
         wincount,
         tiecount,
-        losecount
+        losecount,
+        dealerCardsList,
+        yourCardsList
     };
     localStorage.setItem("blackjackState", JSON.stringify(state));
 }
@@ -413,28 +426,55 @@ function renderRestoredGame() {
     document.getElementById("dealer-cards").innerHTML = "";
     document.getElementById("your-cards").innerHTML = "";
 
-    // ディーラーの伏せ札
-    let hiddenImg = document.createElement("img");
-    hiddenImg.src = finish ? "./cards/" + hidden + ".png" : "./cards/card_back.png";
-    hiddenImg.id = "hidden";
-    document.getElementById("dealer-cards").append(hiddenImg);
-
-    // ディーラーの公開カード
-    for (let i = 0; i < deck.length; i++) {
-        // 伏せ札以外のカードを描画
+    // --- ディーラーのカード描画 ---
+    if (dealerCardsList && dealerCardsList.length > 0) {
+        dealerCardsList.forEach((card, index) => {
+            let img = document.createElement("img");
+            // 最初の1枚（伏せ札）かつ、まだ勝負が終わっていない(finish=false)なら裏面
+            if (index === 0 && !finish) {
+                img.src = "./cards/card_back.png";
+                img.id = "hidden";
+            } else {
+                img.src = "./cards/" + card + ".png";
+                if (index === 0) img.id = "hidden"; // 終わっていてもIDは一応付与
+            }
+            document.getElementById("dealer-cards").append(img);
+        });
     }
 
-    // プレイヤーのカードも同様に描画
+    // --- プレイヤーのカード描画 ---
+    if (yourCardsList && yourCardsList.length > 0) {
+        yourCardsList.forEach(card => {
+            let img = document.createElement("img");
+            img.src = "./cards/" + card + ".png";
+            document.getElementById("your-cards").append(img);
+        });
+    }
 
-    // カウント類
+    // --- カウント類・合計値の表示 ---
     document.getElementById("count").innerText = count;
     document.getElementById("wincount").innerText = wincount;
     document.getElementById("tiecount").innerText = tiecount;
     document.getElementById("losecount").innerText = losecount;
-
-    // 合計値
-    document.getElementById("dealer-sum").innerText = dealerSum;
     document.getElementById("your-sum").innerText = yourSum;
+
+    // ディーラーの合計は、勝負が終わっているときだけ表示（ブラックジャックの通常ルールに合わせる場合）
+    // もし最初から数字だけは見せておくスタイルなら、if(finish) の外に出してください
+    if (finish) {
+        document.getElementById("dealer-sum").innerText = dealerSum;
+        
+        let message = "";
+        if (yourSum > 21) message = "You Lose!(burst)";
+        else if (dealerSum > 21) message = "You win!(burst)";
+        else if (yourSum == dealerSum) message = "Tie!";
+        else if (yourSum > dealerSum) message = "You Win!";
+        else message = "You Lose!";
+
+        document.getElementById("results").innerText = message;
+    } else {
+        document.getElementById("dealer-sum").innerText = ""; 
+        document.getElementById("results").innerText = "";
+    }
 }
 
 function renderRestoredGame() {
