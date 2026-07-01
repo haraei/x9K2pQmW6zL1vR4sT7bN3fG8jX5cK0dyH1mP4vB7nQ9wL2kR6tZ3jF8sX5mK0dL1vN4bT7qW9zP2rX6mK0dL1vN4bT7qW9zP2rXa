@@ -23,29 +23,26 @@ let losecount = 0;
 
 let type = "";
 
-const BGM1 = new Audio("music/吸血鬼は機械仕掛けの少女に恋をする.mp3");
+const BGM1 = new Audio("music/kyuuketukihakikaizikakenosyoujonikoiwosuru.mp3");
 BGM1.loop = true;
 
-const BGM2 = new Audio("music/カジノのひと時.mp3");
+const BGM2 = new Audio("music/kazinonohitotoki.mp3");
 BGM2.loop = true;
 
-const 不老不死 = new Audio("music/不老不死.mp3");
-不老不死.loop = true;
+const hurouhusi = new Audio("music/hurouhusi.mp3");
+hurouhusi.loop = true;
 
-const 星屑サラウンド = new Audio("music/星屑サラウンド.mp3");
-星屑サラウンド.loop = true;
+const hosikuzusaraundo = new Audio("music/hosikuzusaraundo.mp3");
+hosikuzusaraundo.loop = true;
 
-const タイフーンパレード = new Audio("music/タイフーンパレード.mp3");
-タイフーンパレード.loop = true;
+const taihunparedo = new Audio("music/taihunparedo.mp3");
+taihunparedo.loop = true;
 
-const Success = new Audio("music/Success!.mp3");
+const Success = new Audio("music/Success.mp3");
 Success.loop = true;
 
-const 一パーセントの革命前夜 = new Audio("music/1パーセントの革命前夜.mp3");
-一パーセントの革命前夜.loop = true;
-
-// const シャイニングスター = new Audio("https://maou.audio/14_shining_star/");
-// シャイニングスター.loop = true;
+const itipasenntonokakumeizenya = new Audio("music/itpasentonokakumeizenya.mp3");
+itipasenntonokakumeizenya.loop = true;
 
 window.onload = function() {
     let sitePassword = prompt("橘祭 Blackjack のパスワードを入力してください");
@@ -335,11 +332,11 @@ function reset() {
 const songList = {
     bgm1: BGM1,
     bgm2: BGM2,
-    hurou: 不老不死,
-    hoshikuzu: 星屑サラウンド,
-    typhoon: タイフーンパレード,
+    hurou: hurouhusi,
+    hoshikuzu: hosikuzusaraundo,
+    typhoon: taihunparedo,
     success: Success,
-    revolution: 一パーセントの革命前夜
+    revolution: itipasenntonokakumeizenya
 };
 
 function music() {
