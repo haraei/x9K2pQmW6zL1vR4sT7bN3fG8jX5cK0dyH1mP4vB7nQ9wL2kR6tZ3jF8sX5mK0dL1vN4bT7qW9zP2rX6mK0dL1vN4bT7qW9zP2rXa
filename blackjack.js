@@ -187,6 +187,82 @@ function getValue(card) {
     return parseInt(value);
 }
 
+function hit() {
+    if (!canHit) {
+        return;
+    }
+
+    let cardImg = document.createElement("img");
+    let card = deck.pop();
+    yourCardsList.push(card); // 手札リストにカードを追加
+    yourCardsList.push(card); 
+    cardImg.src = "./cards/" + card + ".png";
+    document.getElementById("your-cards").append(cardImg);
+
+    yourSum = 0;
+    yourAceCount = 0;
+    for (let i = 0; i < yourCardsList.length; i++) {
+        yourSum += getValue(yourCardsList[i]);
+        yourAceCount += checkAce(yourCardsList[i]);
+    }
+
+    yourSum = reduceAce(yourSum, yourAceCount);
+
+    document.getElementById("your-sum").innerText = yourSum;
+
+    if (yourSum > 21) { 
+        canHit = false;
+        stay();
+    }
+
+    saveGameState();
+}
+function stay() {
+    if (finish) {
+        return;
+    }
+    dealerSum = reduceAce(dealerSum, dealerAceCount);
+
+    canHit = false;
+    document.getElementById("hidden").src = "./cards/" + hidden + ".png";
+    finish = true;
+
+    let message = "";
+    if (yourSum > 21) {
+        message = "You Lose!(burst)";
+        losecount++;
+    }
+    else if (dealerSum > 21) {
+        message = "You win!(burst)";
+        wincount++;
+    }
+    //both you and dealer <= 21
+
+    else if (yourSum == dealerSum) {
+        message = "Tie!";
+        tiecount++;
+    }
+
+    else if (yourSum > dealerSum) {
+        message = "You Win!";
+        wincount++;
+    }
+    else if (yourSum < dealerSum) {
+        message = "You Lose!";
+        losecount++;
+    }
+    count++;
+
+    document.getElementById("count").innerText = count;
+    document.getElementById("wincount").innerText = wincount;
+    document.getElementById("tiecount").innerText = tiecount;
+    document.getElementById("losecount").innerText = losecount;
+    document.getElementById("dealer-sum").innerText = dealerSum;
+    document.getElementById("your-sum").innerText = yourSum;
+    document.getElementById("results").innerText = message;
+
+    saveGameState();
+}
 function checkAce(card) {
     if (card[0] == "A") {
         return 1;
@@ -414,75 +490,5 @@ function renderRestoredGame() {
     } else {
         document.getElementById("dealer-sum").innerText = ""; 
         document.getElementById("results").innerText = "";
-    }
-}
-
-function renderRestoredGame() {
-    document.getElementById("dealer-cards").innerHTML = "";
-    document.getElementById("your-cards").innerHTML = "";
-
-    // --- ディーラーの伏せ札 ---
-    let hiddenImg = document.createElement("img");
-    hiddenImg.src = finish ? "./cards/" + hidden + ".png" : "./cards/card_back.png";
-    hiddenImg.id = "hidden";
-    document.getElementById("dealer-cards").append(hiddenImg);
-
-    // --- ディーラーの公開カード ---
-    let dealerCards = [];
-    let tempSum = dealerSum - getValue(hidden);
-    let tempAce = dealerAceCount - checkAce(hidden);
-
-    for (let i = 0; i < deck.length; i++) {
-        if (tempSum <= 0) break;
-        dealerCards.push(deck[i]);
-        tempSum -= getValue(deck[i]);
-        tempAce -= checkAce(deck[i]);
-    }
-
-    dealerCards.forEach(card => {
-        let img = document.createElement("img");
-        img.src = "./cards/" + card + ".png";
-        document.getElementById("dealer-cards").append(img);
-    });
-
-    // --- プレイヤーのカード ---
-    let playerCards = [];
-    let startIndex = dealerCards.length;
-    let tempPlayerSum = yourSum;
-    let tempPlayerAce = yourAceCount;
-
-    for (let i = startIndex; i < deck.length; i++) {
-        if (tempPlayerSum <= 0) break;
-        playerCards.push(deck[i]);
-        tempPlayerSum -= getValue(deck[i]);
-        tempPlayerAce -= checkAce(deck[i]);
-    }
-
-    playerCards.forEach(card => {
-        let img = document.createElement("img");
-        img.src = "./cards/" + card + ".png";
-        document.getElementById("your-cards").append(img);
-    });
-
-    // --- カウント類 ---
-    document.getElementById("count").innerText = count;
-    document.getElementById("wincount").innerText = wincount;
-    document.getElementById("tiecount").innerText = tiecount;
-    document.getElementById("losecount").innerText = losecount;
-
-    // --- 合計値 ---
-    document.getElementById("dealer-sum").innerText = dealerSum;
-    document.getElementById("your-sum").innerText = yourSum;
-
-    // --- 結果表示（finish のときだけ） ---
-    if (finish) {
-        let message = "";
-        if (yourSum > 21) message = "You Lose!(burst)";
-        else if (dealerSum > 21) message = "You win!(burst)";
-        else if (yourSum == dealerSum) message = "Tie!";
-        else if (yourSum > dealerSum) message = "You Win!";
-        else message = "You Lose!";
-
-        document.getElementById("results").innerText = message;
     }
 }
