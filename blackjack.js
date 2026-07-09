@@ -1,3 +1,5 @@
+import { GITHUB_TOKEN } from "./token.js";
+
 "use strict";
 
 let dealerCardsList = [];
