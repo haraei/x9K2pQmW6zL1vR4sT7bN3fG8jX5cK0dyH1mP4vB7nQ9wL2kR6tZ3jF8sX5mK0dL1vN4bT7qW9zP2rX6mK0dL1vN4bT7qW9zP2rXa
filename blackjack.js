@@ -46,8 +46,8 @@ itipasenntonokakumeizenya.loop = true;
 
 window.onload = function() {
     let sitePassword = prompt("橘祭 Blackjack のパスワードを入力してください");
-    if (sitePassword !== "TACHIBANA2026") { 
-        alert("パスワードが違います。アクセスできません。");
+    if (sitePassword !== "tachibana2026") { 
+        alert("馬鹿がよ");
         document.body.innerHTML = "<h2>閲覧権限がありません。</h2>";
         return;
     }
@@ -345,7 +345,7 @@ function music() {
         document.getElementById("countArea").style.display = "block";
         document.getElementById("reset").style.display = "block";
     }else {
-        alert("パスワードが違います");
+        alert("あほなのかな？");
     }
 };
 
@@ -408,6 +408,16 @@ function changeMusic(event) {
     document.getElementById("countArea").style.display = "none";
     document.getElementById("reset").style.display = "none";
 }
+
+// 右クリック禁止
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+// F12やCtrl+Shift+Iなどの禁止
+document.addEventListener('keydown', e => {
+  if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+    e.preventDefault();
+  }
+});
 
 function saveGameState() {
     const state = {
