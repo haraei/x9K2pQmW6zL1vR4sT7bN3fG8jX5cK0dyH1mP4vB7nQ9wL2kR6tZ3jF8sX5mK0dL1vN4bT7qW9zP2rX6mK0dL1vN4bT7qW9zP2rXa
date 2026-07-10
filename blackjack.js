@@ -45,10 +45,27 @@ const itipasenntonokakumeizenya = new Audio("music/itpasentonokakumeizenya.mp3")
 itipasenntonokakumeizenya.loop = true;
 
 window.onload = function() {
-    let sitePassword = prompt("橘祭 Blackjack のパスワードを入力してください");
-    if (sitePassword !== "tachibana2026") { 
+    let sitePassword = prompt("パスワードを入力してください");
+    if (sitePassword !== "tachifes") { 
         alert("馬鹿がよ");
-        document.body.innerHTML = "<h2>閲覧権限がありません。</h2>";
+        const insults = [
+        "IQより入力回数の方が多そう",
+        "知識0、根拠0、自信100",
+        "自信満々で不正解",
+        "記憶力404 Not Found",
+        "入力欄に遊ばれてる",
+        "勘認証",
+        "Human authentication failed.",
+        "ログイン画面 1 - 0 お前",
+        "パスワードに不審者扱いされてて草",
+        "その入力、記憶じゃなくて幻覚",
+        "実力で外してる",
+        "全部違うの逆に才能",
+        "サイト『お前誰だよ』",
+        "もしかしてハッカーにあこがれているのかな<br>by森コーチ"
+        ];
+        const msg = insults[Math.floor(Math.random() * insults.length)];
+        document.body.innerHTML = `<h2>${msg}</h2>`;
         return;
     }
     const saved = loadGameState();
