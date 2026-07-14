@@ -62,6 +62,7 @@ window.onload = function() {
         "実力で外してる",
         "全部違うの逆に才能",
         "サイト『お前誰だよ』",
+        "バーカ<br>by高火田",
         "もしかしてハッカーにあこがれているのかな<br>by森コーチ"
         ];
         const msg = insults[Math.floor(Math.random() * insults.length)];
