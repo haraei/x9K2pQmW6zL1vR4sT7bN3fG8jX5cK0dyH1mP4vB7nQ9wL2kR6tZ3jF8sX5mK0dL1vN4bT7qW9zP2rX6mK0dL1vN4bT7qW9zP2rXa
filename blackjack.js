@@ -62,8 +62,8 @@ window.onload = function() {
         "実力で外してる",
         "全部違うの逆に才能",
         "サイト『お前誰だよ』",
-        "バーカ<br>by高火田",
-        "もしかしてハッカーにあこがれているのかな<br>by森コーチ"
+        "もしかしてハッカーにあこがれているのかな<br>by森コーチ",
+        "バーカ<br>高日田"
         ];
         const msg = insults[Math.floor(Math.random() * insults.length)];
         document.body.innerHTML = `<h2>${msg}</h2>`;
@@ -112,8 +112,25 @@ window.onload = function() {
     document.getElementById("musicSelect").addEventListener("change", changeMusic);
     document.getElementById("decisioncount").addEventListener("click", changecount);
     document.getElementById("reset").addEventListener("click", reset);
+    document.addEventListener('keydown', function(event){
+        if(event.keyCode === 49){
+            hit()
+        } else if(event.keyCode === 50){
+            stay()
+        } else if(event.keyCode === 51){
+            resetGame()
+        } else if(event.keyCode === 52){
+            kensyou()
+        }
+    });
 };
 
+// function kensyou() {
+//     for (let i = 0; i < 10000000; i++) {
+//         stay()
+//         stay()
+//     }
+// }
 
 function buildDeck() {
     let values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
@@ -204,6 +221,7 @@ function getValue(card) {
 
 function hit() {
     if (!canHit) {
+        resetGame()
         return;
     }
 
@@ -233,6 +251,7 @@ function hit() {
 }
 function stay() {
     if (finish) {
+        resetGame()
         return;
     }
     dealerSum = reduceAce(dealerSum, dealerAceCount);
@@ -432,7 +451,7 @@ document.addEventListener('contextmenu', e => e.preventDefault());
 
 // F12やCtrl+Shift+Iなどの禁止
 document.addEventListener('keydown', e => {
-  if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+  if (e.key === 'F12' || e.key === 'F11' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
     e.preventDefault();
   }
 });
